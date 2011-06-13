@@ -1,0 +1,18 @@
+= Logrotate Puppet module =
+
+== Installation ==
+
+Place this in your Puppet installation's module directory
+
+Requires puppet-cron , OR , the cron package must be defined else where before calling logrotate
+
+
+== Usage ==
+
+1) Add logrotate class to node
+
+include logrotate
+
+=== Adding logrotate files  ===
+
+
