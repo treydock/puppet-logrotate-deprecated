@@ -9,9 +9,14 @@ define logrotate::file (
 	$scripts=false,
 	$postrotate=false
 ) {
+	include logrotate::params
 
-	file { "/var/log/archives/${name}":
+	file { "${logrotate::params::logrotate_archive_dir}/${name}":
 		ensure	=> 'directory',
+		owner	=> 'root',
+		group	=> 'root',
+		mode 	=> '700',
+		require	=> File["${logrotate::params::logrotate_archive_dir}"],
 	}
 
 

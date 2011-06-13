@@ -1,4 +1,5 @@
 class logrotate::base {
+	include logrotate::params
 
 	package { 'logrotate':
 		ensure	=> installed,
@@ -32,7 +33,7 @@ class logrotate::base {
 		notify	=> Service['crond'],
 	}
 
-	file { '/var/log/archives':
+	file { "${logrotate::params::logrotate_archive_dir}":
 		ensure	=> directory,
 		owner	=> 'root',
 		group	=> 'root',
@@ -41,11 +42,11 @@ class logrotate::base {
 	}
 
 
-	file { '/var/log/archives/wtmp':
+	file { "${logrotate::params::logrotate_archive_dir}/wtmp":
 		ensure	=> directory,
 		owner	=> 'root',
 		group	=> 'root',
 		mode	=> '700',
-		require	=> Package['logrotate'],
+		require	=> File["${logrotate::params::logrotate_archive_dir}"],
 	}
 }
