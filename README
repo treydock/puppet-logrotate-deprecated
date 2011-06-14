@@ -18,7 +18,7 @@ include logrotate
 In your node defintion include something similiar to the following before "include logrotate"
 
     logrotate::file { "syslog" :
-        log         => '/var/log/messages /var/log/secure /var/log/maillog /var/log/spooler /var/log/boot.log /var/log/cron',
+        log         => '/var/log/messages /var/log/secure /var/log/maillog /var/log/boot.log /var/log/cron',
         interval    => 'weekly',
         rotation    => '52',
         size        => '1M',
