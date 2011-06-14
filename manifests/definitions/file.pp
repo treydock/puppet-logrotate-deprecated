@@ -4,7 +4,7 @@ define logrotate::file (
 	$rotation=false,
 	$size=false,
 	$options=false,
-	$olddir=false,
+	$archive=false,
 	$create=false,
 	$scripts=false,
 	$postrotate=false
@@ -26,7 +26,7 @@ define logrotate::file (
 		group	=> 'root',
 		mode	=> '644',
 		content	=> template('logrotate/logrotate_file.erb'),
-		require	=> File['/etc/logrotate.d'],
+		require	=> [ File['/etc/logrotate.d'], File["${logrotate::params::logrotate_archive_dir}/${name}"] ],
 	}
 
 }
