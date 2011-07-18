@@ -3,7 +3,6 @@ class logrotate::base {
 
 	package { 'logrotate':
 		ensure	=> installed,
-		require	=> Package['vixie-cron'],
 	}
 
 	file { '/etc/logrotate.d':
@@ -43,6 +42,14 @@ class logrotate::base {
 
 
 	file { "${logrotate::params::logrotate_archive_dir}/wtmp":
+		ensure	=> directory,
+		owner	=> 'root',
+		group	=> 'root',
+		mode	=> '700',
+		require	=> File["${logrotate::params::logrotate_archive_dir}"],
+	}
+
+	file { "${logrotate::params::logrotate_archive_dir}/btmp":
 		ensure	=> directory,
 		owner	=> 'root',
 		group	=> 'root',

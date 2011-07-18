@@ -3,6 +3,7 @@ define logrotate::file (
 	$interval=false,
 	$rotation=false,
 	$size=false,
+	$minsize=false,
 	$options=false,
 	$archive=false,
 	$create=false,
