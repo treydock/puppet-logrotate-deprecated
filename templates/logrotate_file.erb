@@ -19,7 +19,7 @@
 	create <%= create %>
 <% end -%>
 <% if archive and not archive.empty? -%>
-	olddir /var/log/archives/<%= name %>
+	olddir <%= olddir %>
 <% end -%>
 <% if scripts and not scripts.empty? -%><%= scripts %>
 <% end -%>

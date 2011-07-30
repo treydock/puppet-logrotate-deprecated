@@ -9,7 +9,7 @@ class logrotate::params {
 	
 	case $operatingsystem {
     	CentOS: {
-			$log_dir = '/var/log/'
+			$log_dir = '/var/log'
     		$logrotate_archive_dir = "$log_dir/archives"
 		}
 	}
