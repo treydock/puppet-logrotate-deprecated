@@ -8,7 +8,7 @@ Set variables for names and paths
 class logrotate::params {
 	
 	case $operatingsystem {
-    	CentOS: {
+    	CentOS,RedHat: {
 			$log_dir = '/var/log'
     		$logrotate_archive_dir = "$log_dir/archives"
 		}

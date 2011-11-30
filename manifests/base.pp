@@ -56,4 +56,16 @@ class logrotate::base {
 		mode	=> '700',
 		require	=> File["${logrotate::params::logrotate_archive_dir}"],
 	}
+
+	if $operatingsystem == "CentOS" {
+		logrotate::file { 'yum':
+			log			=> '/var/log/yum.log',
+			interval	=> 'yearly',
+			size		=> '30k',
+			rotation	=> '4',
+			archive		=> 'true',
+			create		=> '0600 root root',
+			options		=> [ 'missingok', 'notifempty', 'dateext' ],
+		}
+	}
 }

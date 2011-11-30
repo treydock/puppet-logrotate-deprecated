@@ -6,7 +6,7 @@ define logrotate::file (
 	$minsize=false,
 	$options=false,
 	$archive=false,
-	$olddir="${logrotate::params::logrotate_archive_dir}/${name}",
+	$olddir="${logrotate::params::logrotate_archive_dir}/$name",
 	$olddir_owner='root',
 	$olddir_group='root',
 	$olddir_mode='700',
