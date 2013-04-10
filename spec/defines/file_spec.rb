@@ -44,6 +44,23 @@ describe 'logrotate::file' do
     should contain_file('/etc/logrotate.d/foo') \
       .with_content(/^\/var\/log\/foo.log\s+{$/)
   end
+  
+  context 'postrotate as a string' do
+    let(:params) {
+      {
+        :log        => '/var/log/foo.log',
+        :postrotate => 'foobar',
+      }
+    }
+
+      it do
+        should contain_file('/etc/logrotate.d/foo') \
+          .with_content(/^\/var\/log\/foo.log\s+{$/) \
+          .with_content(/^\s+postrotate$/) \
+          .with_content(/^\s+foobar$/) \
+          .with_content(/^\s+endscript$/)
+      end
+  end
 
   context 'postrotate as an array' do
     let(:params) {
