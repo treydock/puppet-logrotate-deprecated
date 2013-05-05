@@ -1,12 +1,12 @@
-# Logrotate Puppet module #
+# puppet-logrotate [![Build Status](https://travis-ci.org/treydock/puppet-logrotate.png)](https://travis-ci.org/treydock/puppet-logrotate)
 
-## Installation ##
+## Installation
 
 Place this in your Puppet installation's module directory
 
 Requires puppet-cron , OR , the cron package must be defined else where before calling logrotate
 
-## Usage ##
+## Usage
 
 1. Add logrotate class to node
 
@@ -14,7 +14,7 @@ Requires puppet-cron , OR , the cron package must be defined else where before c
 include logrotate
 ```
 
-### Adding logrotate files  ###
+### Adding logrotate files
 
 In your node defintion include something similiar to the following before "include logrotate"
 
@@ -30,15 +30,14 @@ In your node defintion include something similiar to the following before "inclu
     }   
 ```
 
-## Development ##
+## Development
 
-### Dependencies ###
+### Dependencies
 
 * Ruby 1.8.7
 * Bundler
 
-### Running rspec-puppet tests ###
+### Running rspec-puppet tests
 
 1. To install dependencies run `bundle install`
-2. Run tests using `rake spec`
-3. Verbose test output available using `rake all`
+2. Run tests using `rake spec:all`

@@ -1,18 +1,20 @@
-require 'rubygems'
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-lint/tasks/puppet-lint'
 
-# Default Rake task
-task :all => [ :spec, :lint ]
+RSpec::Core::RakeTask.new(:system_test) do |c|
+  c.pattern = "spec/system/**/*_spec.rb"
+end
+
+namespace :spec do
+  desc "Run rspec-puppet and puppet-lint tasks"
+  task :all => [ :spec, :lint ]
+  desc 'Run system tests'
+  task :system => :system_test
+end
 
 # Disable puppet-lint checks
-## Add check name to array to disable
-[
-  '80chars',
-  'class_parameter_defaults',
-].each do |check|
-  PuppetLint.configuration.send("disable_#{check}")
-end
+PuppetLint.configuration.send("disable_80chars")
+PuppetLint.configuration.send("disable_class_inherits_from_params_class")
 
 # REF: https://gist.github.com/indirect/2922427
 namespace :source do

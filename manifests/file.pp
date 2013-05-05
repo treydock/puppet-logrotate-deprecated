@@ -31,8 +31,6 @@
 #
 # [*create*]
 #
-# [*scripts*]
-#
 # [*postrotate*]
 #
 # === Examples
@@ -50,7 +48,7 @@
 # Copyright 2013 Trey Dockendorf
 #
 define logrotate::file (
-  $log          = false,
+  $log          = 'UNSET',
   $interval     = false,
   $rotation     = false,
   $size         = false,
@@ -58,28 +56,50 @@ define logrotate::file (
   $options      = false,
   $archive      = false,
   $olddir       = 'UNSET',
-  $olddir_owner = 'root',
-  $olddir_group = 'root',
-  $olddir_mode  = '0700',
+  $olddir_owner = 'UNSET',
+  $olddir_group = 'UNSET',
+  $olddir_mode  = 'UNSET',
   $create       = false,
-  $scripts      = false,
   $postrotate   = false
 ) {
-  include logrotate::params
-
+  include logrotate
+  
+  $archive_dir = $logrotate::archive_dir
+  
+  $log_real = $log ? {
+    'UNSET'   => "/var/log/${name}.log",
+    default   => $log,
+  }
+  $interval_real = $interval ? {
+    'UNSET'   => false,
+    default   => $interval,
+  }
   $olddir_real = $olddir ? {
-    'UNSET'   => "${logrotate::params::logrotate_archive_dir}/${name}",
+    'UNSET'   => "${archive_dir}/${name}",
     default   => $olddir,
   }
-
-  file { $olddir_real:
-    ensure  => 'directory',
-    owner   => $olddir_owner,
-    group   => $olddir_group,
-    mode    => $olddir_mode,
-    require => File[$logrotate::params::logrotate_archive_dir],
+  $olddir_owner_real = $olddir_owner ? {
+    'UNSET'   => 'root',
+    default   => $olddir_owner,
+  }
+  $olddir_group_real = $olddir_group ? {
+    'UNSET'   => 'root',
+    default   => $olddir_group,
+  }
+  $olddir_mode_real = $olddir_mode ? {
+    'UNSET'   => '0700',
+    default   => $olddir_mode,
   }
 
+  if $archive {
+    file { $olddir_real:
+      ensure  => 'directory',
+      owner   => $olddir_owner_real,
+      group   => $olddir_group_real,
+      mode    => $olddir_mode_real,
+      require => File[$archive_dir],
+    }
+  }
 
   file { "/etc/logrotate.d/${name}":
     ensure  => present,
