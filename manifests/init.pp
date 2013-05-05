@@ -25,14 +25,25 @@
 #   Default: false
 #
 # [*package_name*]
+#   Operatingsystem specific logrotate package name.
 #
 # [*confd_path*]
+#   Operatingsystem specific location of logrotate.d
 #
 # [*conf_path*]
+#   Operatingsystem specific path to logrotate.conf
 #
 # [*cron_daily_path*]
+#   Operatingsystem specific locate of cron.daily
+#   to activate logrotate
+#
+# [*archive*]
+#   A value of false disables the default archiving.
+#   Default: true
 #
 # [*archive_dir*]
+#   Path for moving rotated log files.
+#   Default: /var/log/archive
 #
 # === Examples
 #
@@ -55,17 +66,13 @@ class logrotate (
   $confd_path         = $logrotate::params::confd_path,
   $conf_path          = $logrotate::params::conf_path,
   $cron_daily_path    = $logrotate::params::cron_daily_path,
+  $archive            = true,
   $archive_dir        = $logrotate::params::archive_dir
 
 ) inherits logrotate::params {
 
   validate_re($rotation_interval, '(daily|weekly|monthly|yearly)')
   validate_re($rotate, '[0-9]+')
-  
-  $archive = $archive_dir ? {
-    false   => false,
-    default => true,
-  }
   
   package { 'logrotate':
     ensure  => present,
@@ -101,7 +108,7 @@ class logrotate (
     require => Package['logrotate'],
   }
 
-  if $archive_dir {
+  if $archive {
     file { $archive_dir:
       ensure  => directory,
       owner   => 'root',

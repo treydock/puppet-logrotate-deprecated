@@ -153,9 +153,9 @@ describe 'logrotate' do
     })
   end
 
-  context 'when declaring archive_dir => false' do
+  context 'when declaring archive => false' do
     let :params do
-      { :archive_dir => false }
+      { :archive => false }
     end
 
     it { should_not contain_file('/var/log/archive') }
