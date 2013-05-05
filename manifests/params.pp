@@ -3,6 +3,12 @@
 #   The logrotate configuration settings.
 #   Do not include this class.
 #
+# === Variables
+#
+# [*logrotate_archive_dir*]
+#   Top-scope or ENC value that sets the archive directory path.
+#   Default: /var/log/archives
+#
 # === Authors
 #
 # Trey Dockendorf <treydock@gmail.com>
@@ -12,17 +18,11 @@
 # Copyright 2013 Trey Dockendorf
 #
 class logrotate::params {
-  
-  $archive_dir = $::logrotate_archive_dir ? {
-    undef   => '/var/log/archives',
-    default => $::logrotate_archive_dir,
-  }
 
   case $::osfamily {
     'RedHat': {
       $package_name           = 'logrotate'
       $log_dir                = '/var/log'
-      $logrotate_archive_dir  = "${log_dir}/archives"
       $conf_path              = '/etc/logrotate.conf'
       $confd_path             = '/etc/logrotate.d'
       $cron_daily_path        = '/etc/cron.daily/logrotate'
@@ -31,6 +31,11 @@ class logrotate::params {
     default: {
       fail("Unsupported osfamily: ${::osfamily}, module ${module_name} only supports osfamily RedHat")
     }
+  }
+
+  $archive_dir = $::logrotate_archive_dir ? {
+    undef   => "${log_dir}/archives",
+    default => $::logrotate_archive_dir,
   }
 
 }

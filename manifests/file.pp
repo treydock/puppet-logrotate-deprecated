@@ -63,9 +63,9 @@ define logrotate::file (
   $postrotate   = false
 ) {
   include logrotate
-  
+
   $archive_dir = $logrotate::archive_dir
-  
+
   $log_real = $log ? {
     'UNSET'   => "/var/log/${name}.log",
     default   => $log,

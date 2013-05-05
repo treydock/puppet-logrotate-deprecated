@@ -10,7 +10,7 @@
 #   Default: weekly
 #
 # [*rotate*]
-#   Integer that sets the number of times a 
+#   Integer that sets the number of times a
 #   file is rotated before being removed.
 #   Default: 52
 #
@@ -73,7 +73,7 @@ class logrotate (
 
   validate_re($rotation_interval, '(daily|weekly|monthly|yearly)')
   validate_re($rotate, '[0-9]+')
-  
+
   package { 'logrotate':
     ensure  => present,
     name    => $package_name,
