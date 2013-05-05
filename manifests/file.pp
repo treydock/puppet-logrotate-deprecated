@@ -60,7 +60,7 @@ define logrotate::file (
   $olddir_group = 'UNSET',
   $olddir_mode  = 'UNSET',
   $create       = false,
-  $postrotate   = false
+  $postrotate   = 'UNSET'
 ) {
   include logrotate
 
@@ -89,6 +89,19 @@ define logrotate::file (
   $olddir_mode_real = $olddir_mode ? {
     'UNSET'   => '0700',
     default   => $olddir_mode,
+  }
+  # Ensure the postrotate is either false or an array
+  $postrotate_real = $postrotate ? {
+    'UNSET'   => false,
+    default   => is_string($postrotate) ? {
+      true  => [ $postrotate ],
+      false => $postrotate,
+    }
+  }
+  if $postrotate_real {
+    validate_array($postrotate_real)
+  } else {
+    validate_bool($postrotate_real)
   }
 
   if $archive {
