@@ -49,7 +49,7 @@ describe 'logrotate' do
 
   it do
     should contain_file('/etc/logrotate.conf') \
-      .with_content(/^\/var\/log\/wtmp\s+{$/) \
+      .with_content(/^\/var\/log\/wtmp\s+\{$/) \
       .with_content(/^\s+monthly$/) \
       .with_content(/^\s+rotate\s12$/) \
       .with_content(/^\s+minsize\s1M$/) \
@@ -59,7 +59,7 @@ describe 'logrotate' do
 
   it do
     should contain_file('/etc/logrotate.conf') \
-    .with_content(/^\/var\/log\/btmp\s+{$/) \
+    .with_content(/^\/var\/log\/btmp\s+\{$/) \
     .with_content(/^\s+missingok$/) \
     .with_content(/^\s+monthly$/) \
     .with_content(/^\s+rotate\s12$/) \
@@ -132,7 +132,7 @@ describe 'logrotate' do
 
   it do
     should contain_file('/etc/logrotate.d/yum') \
-      .with_content(/^\/var\/log\/yum.log\s+{$/) \
+      .with_content(/^\/var\/log\/yum.log\s+\{$/) \
       .with_content(/^\s+missingok$/) \
       .with_content(/^\s+notifempty$/) \
       .with_content(/^\s+dateext$/) \

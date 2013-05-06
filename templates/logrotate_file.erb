@@ -24,9 +24,9 @@
   olddir <%= @olddir_real %>
 <% end -%>
 
-<% if @postrotate -%>
+<% if @postrotate_real -%>
   postrotate
-<% @postrotate.each do |p| -%>
+<% @postrotate_real.each do |p| -%>
     <%= p %>
 <% end -%>
   endscript
